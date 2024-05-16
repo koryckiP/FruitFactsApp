@@ -1,4 +1,6 @@
 using FruitFactsApp.Server.Data;
+using FruitFactsApp.Server.Repositories.Contracts;
+using FruitFactsApp.Server.Repositories.Implementations;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +16,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
 });
+builder.Services.AddScoped<IFruitsRepository, FruitsRepository>();
 
 var app = builder.Build();
 
