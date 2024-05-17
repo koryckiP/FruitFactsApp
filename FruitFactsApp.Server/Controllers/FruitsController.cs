@@ -83,7 +83,12 @@ namespace FruitFactsApp.Server.Controllers
                     return BadRequest();
                 }
 
-                newFruit.Id = 0;
+                var fruitName = await _repository.GetFruitByName(newFruit.Name);
+                if (fruitName != null)
+                {
+                    ModelState.AddModelError("name", $"Fruit of given name already exists in database: {fruitName}");
+                    return BadRequest(ModelState);
+                }
 
                 var result = await _repository.AddFruit(newFruit);
 
@@ -92,6 +97,41 @@ namespace FruitFactsApp.Server.Controllers
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult<FruitEntity>> UpdateFruit(int id, FruitEntity newFruit)
+        {
+            try
+            {
+                if(id != newFruit.Id)
+                {
+                    return BadRequest("Fruit Id mismatch");
+                }
+
+                var fruitToUpdate = await _repository.GetFruitById(id);
+
+                if (fruitToUpdate is null)
+                {
+                    return NotFound("No Fruit of specified Id was found in database");
+                }
+
+                var allFruits = await _repository.GetAllFruits();
+                foreach( var f in  allFruits)
+                {
+                    if(f.Name.Equals(newFruit.Name, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        ModelState.AddModelError("name", "Updating would cause a duplicate name");
+                        return BadRequest(ModelState);
+                    }
+                }
+
+                return await _repository.UpdateFruit(newFruit);
+            }
+            catch (Exception ex) 
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error occured while updating data:: "+ex.Message);
             }
         }
     }
