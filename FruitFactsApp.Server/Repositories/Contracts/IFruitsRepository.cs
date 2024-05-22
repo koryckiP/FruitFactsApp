@@ -9,5 +9,7 @@ namespace FruitFactsApp.Server.Repositories.Contracts
         Task<FruitEntity> GetFruitByName(string name);
         Task<FruitEntity> AddFruit(FruitEntity fruit);
         Task<FruitEntity> UpdateFruit(FruitEntity newFruit);
+        Task<FruitEntity> DeleteFruitById(int id);
+        Task<IEnumerable<FruitEntity>> SearchFruitByDescription(string description);
     }
 }

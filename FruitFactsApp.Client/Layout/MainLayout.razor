@@ -1,16 +1,38 @@
 ﻿@inherits LayoutComponentBase
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
+<MudThemeProvider IsDarkMode="@darkMode" />
+<MudDialogProvider />
+<MudSnackbarProvider />
 
-        <article class="content px-4">
+<MudLayout>
+    <MudAppBar Elevation="5">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="()=> ToggleDrawer()"></MudIconButton>
+        <MudText Typo="Typo.h5" Class="ml-3">Fruit List</MudText>
+        <MudSpacer></MudSpacer>
+        <MudToggleIconButton @bind-Toggled="@darkMode" Icon="@Icons.Material.Filled.LightMode" Color="Color.Inherit" ToggledIcon="@Icons.Material.Filled.DarkMode"></MudToggleIconButton>
+    </MudAppBar>
+    <MudDrawer @bind-Open="@drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="5">
+            <MudNavMenu>
+                <MudNavLink Href="/" Match="NavLinkMatch.All">Home</MudNavLink>
+                <MudNavLink Href="/fruits" Match="NavLinkMatch.All">Fruits</MudNavLink>
+            </MudNavMenu>
+    </MudDrawer>
+    <MudMainContent>
             @Body
-        </article>
-    </main>
-</div>
+    </MudMainContent>
+
+</MudLayout>
+
+
+@code{
+    bool drawerOpen = true;
+    bool darkMode = false;
+
+    void ToggleDrawer(){
+        drawerOpen = !drawerOpen;
+    }
+
+    void ToggleDarkMode(){
+        darkMode = !darkMode;
+    }
+}

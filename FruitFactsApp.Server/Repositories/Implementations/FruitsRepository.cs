@@ -21,6 +21,18 @@ namespace FruitFactsApp.Server.Repositories.Implementations
             return result.Entity;
         }
 
+        public async Task<FruitEntity> DeleteFruitById(int id)
+        {
+            var fruit = _context.Fruits.FirstOrDefault(f => f.Id == id);
+            if (fruit != null)
+            {
+                _context.Fruits.Remove(fruit);
+                await _context.SaveChangesAsync();
+                return fruit;
+            }
+            return null;
+        }
+
         public  async Task<IEnumerable<FruitEntity>> GetAllFruits()
         {
             return await _context.Fruits.ToListAsync();
@@ -36,6 +48,18 @@ namespace FruitFactsApp.Server.Repositories.Implementations
         public async Task<FruitEntity> GetFruitByName(string name)
         {
             return await _context.Fruits.FirstOrDefaultAsync(f => f.Name == name);
+        }
+
+        public async Task<IEnumerable<FruitEntity>> SearchFruitByDescription(string description)
+        {
+            IQueryable<FruitEntity> query = _context.Fruits;
+
+            if (description is not null)
+            {
+                query = query.Where(f => f.Description.Contains(description));
+            }
+
+            return await query.ToListAsync();
         }
 
         public async Task<FruitEntity> UpdateFruit(FruitEntity newFruit)

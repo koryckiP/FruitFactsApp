@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34316.72
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FruitFactsApp.Server", "FruitFactsApp.Server\FruitFactsApp.Server.csproj", "{E38249CF-8BE7-4A6B-AA9F-F5938F4B549E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FruitFactsApp.Server", "FruitFactsApp.Server\FruitFactsApp.Server.csproj", "{E38249CF-8BE7-4A6B-AA9F-F5938F4B549E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FruitFactsApp.Client", "FruitFactsApp.Client\FruitFactsApp.Client.csproj", "{82421D0B-969D-492A-B857-5476AF8035E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FruitFactsApp.Client", "FruitFactsApp.Client\FruitFactsApp.Client.csproj", "{82421D0B-969D-492A-B857-5476AF8035E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FruitFactsApp.Library", "FruitFactsApp.Library\FruitFactsApp.Library.csproj", "{9F7F50E9-AB33-433C-9355-E29169B5FDC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FruitFactsApp.Library", "FruitFactsApp.Library\FruitFactsApp.Library.csproj", "{9F7F50E9-AB33-433C-9355-E29169B5FDC2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

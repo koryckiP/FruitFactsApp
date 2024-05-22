@@ -37,7 +37,7 @@ namespace FruitFactsApp.Server.Controllers
             try
             {
                 var fruit = await _repository.GetFruitById(id);
-                if(fruit is null)
+                if (fruit is null)
                 {
                     return NotFound("No such fruit found");
                 }
@@ -59,7 +59,7 @@ namespace FruitFactsApp.Server.Controllers
             try
             {
                 var fruit = await _repository.GetFruitByName(name);
-                if(fruit is null)
+                if (fruit is null)
                 {
                     return NotFound("No fruit of such name has been found good sire");
                 }
@@ -73,6 +73,27 @@ namespace FruitFactsApp.Server.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Error while looking for fruit named: {name}");
             }
         }
+
+        [HttpGet("{search}")]
+        public async Task<ActionResult<IEnumerable<FruitEntity>>> SearchFruit(string search)
+        {
+            try
+            {
+                var result = await _repository.SearchFruitByDescription(search);
+
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+
+                return NotFound();
+            }
+            catch(Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error searching for data in database");
+            }
+        }
+
         [HttpPost]
         public async Task<ActionResult<FruitEntity>> AddFruit([FromBody] FruitEntity newFruit)
         {
@@ -132,6 +153,26 @@ namespace FruitFactsApp.Server.Controllers
             catch (Exception ex) 
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error occured while updating data:: "+ex.Message);
+            }
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult<FruitEntity>> DeleteFruitById(int id)
+        {
+            try
+            {
+
+                var fruit = _repository.GetFruitById(id);
+                if (fruit is null)
+                {
+                    return NotFound("Fruit not found");
+                }
+
+                return await _repository.DeleteFruitById(id);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error occured while deleting fruit");
             }
         }
     }
